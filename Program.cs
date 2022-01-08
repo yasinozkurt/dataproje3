@@ -25,6 +25,8 @@ namespace DsProje3
             ağaç1.derinlikBulVeYazdır();
             
             Console.WriteLine("#######################################################################################################");
+            int adet=ağaç1.kaçAdet("pide");
+            Console.WriteLine(adet + " adet pide sipariş edilmiş, hepsine yüzde 10 indirim uygulandı");
 
 
 
@@ -88,7 +90,7 @@ namespace DsProje3
     {
         public string yemekAdı;
         public int adet;
-        public  int birimFiyatı;
+        public  double birimFiyatı;
         //Yemek adı ve birim fiyatları için önceden hazırlanmış static yapılı listeler:
         static string[] yemekler = { "pizza", "pide", "kebap", "patlıcan musakka", "mantı", "sarma", "mercimek köftesi", "hamburger" };
         static int[] birimFiyatları = { 17, 16, 25, 32, 9, 20, 12, 7 };
@@ -178,7 +180,7 @@ namespace DsProje3
                         foreach(ArrayList l in node.SiparişListesi)// Bu mahalleden yapılan her bir sipariş için dönecek
                             
                         {
-                            int busiparişToplamı = 0;
+                            double busiparişToplamı = 0;
                             int index = 0;
                            foreach(YemekSınıfı y in l)// Yapılan her bir siparişteki yemek çeşidi kadar dönecek
                             {
@@ -258,11 +260,45 @@ namespace DsProje3
                 return -1;
                 
             }
-            int derinlik=traverse(root)+1;
+            int derinlik=traverse(root);
 
             Console.WriteLine("DERİNLİK: " + derinlik);
 
         }
+
+
+        //şu an eksik sonuç veriyor sebebini bilmiyorum
+        public int kaçAdet(string YemekAdı)
+        {
+            int kaçAdet = 0;
+          
+
+            void traverse(MahalleSınıfı node)
+            {
+                if (node != null)
+                {                                   
+                    foreach (ArrayList l in node.SiparişListesi)// Bu mahalleden yapılan her bir sipariş için dönecek
+                    {
+                     
+                        foreach (YemekSınıfı y in l)// Yapılan her bir siparişteki yemek çeşidi kadar dönecek
+                        {
+                            if (YemekAdı == y.yemekAdı)
+                            {
+                                Console.WriteLine(y.yemekAdı);
+                                kaçAdet+=y.adet;
+                                y.birimFiyatı = (y.birimFiyatı * 9) / 10;
+                            }                        
+                        }
+                    }
+                    Console.WriteLine();
+                    traverse(node.l);
+                    traverse(node.r);
+                }            
+            }
+            traverse(root);
+
+            return kaçAdet;
         }
     }
+ }
 
