@@ -25,8 +25,9 @@ namespace DsProje3
             ağaç1.derinlikBulVeYazdır();
             
             Console.WriteLine("#######################################################################################################");
-            int adet=ağaç1.kaçAdet("pide");
-            Console.WriteLine(adet + " adet pide sipariş edilmiş, hepsine yüzde 10 indirim uygulandı");
+            string siparişVerilenYemek = "hamburger";
+            int adet=ağaç1.kaçAdet(siparişVerilenYemek);
+            Console.WriteLine(adet + " adet "+siparişVerilenYemek+ " sipariş edilmiş, hepsine yüzde 10 indirim uygulandı");
 
 
 
@@ -100,9 +101,9 @@ namespace DsProje3
         {
           
             int yemek = r.Next(7);
-            this.yemekAdı = yemekler[r.Next(7)];
+            this.yemekAdı = yemekler[r.Next(8)];
             this.adet = r.Next(7)+1;
-            this.birimFiyatı =birimFiyatları[r.Next(7)];
+            this.birimFiyatı =birimFiyatları[r.Next(8)];
         }
        
     }
@@ -286,15 +287,17 @@ namespace DsProje3
                             {
                                 Console.WriteLine(y.yemekAdı);
                                 kaçAdet+=y.adet;
+                                Console.WriteLine(y.adet);
                                 y.birimFiyatı = (y.birimFiyatı * 9) / 10;
                             }                        
                         }
                     }
-                    Console.WriteLine();
+                    Console.WriteLine("-------------------");
                     traverse(node.l);
                     traverse(node.r);
                 }            
             }
+            Console.WriteLine(root.mahalleAdı + " root mahhalesi");
             traverse(root);
 
             return kaçAdet;
